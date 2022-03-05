@@ -256,6 +256,7 @@
 #endif
 #if __has_cpp_attribute(clang::musttail) && !defined(__arm__) && \
     !defined(_ARCH_PPC) && !defined(__wasm__) &&                 \
+    !defined(__MIPSEL__) && !defined(__MIPSEB__) &&              \
     !(defined(_MSC_VER) && defined(_M_IX86)) &&                  \
     !(defined(__NDK_MAJOR__) && __NDK_MAJOR <= 24)
 #  ifndef PROTO2_OPENSOURCE
