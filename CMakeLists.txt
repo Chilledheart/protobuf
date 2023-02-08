@@ -138,6 +138,10 @@ if(${CMAKE_VERSION} VERSION_GREATER 3.18 OR ${CMAKE_VERSION} VERSION_EQUAL 3.18)
 else()
   include(CheckCXXSourceCompiles)
   set(OLD_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
+  ## Fix for mingw pthread mode
+  if (MINGW AND CMAKE_USE_PTHREADS_INIT)
+    set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_REQUIRED_LIBRARIES} -lpthread")
+  endif()
   set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS} -Wl,--version-script=${CMAKE_CURRENT_BINARY_DIR}/cmaketest.map)
   check_cxx_source_compiles("
     int main() {
@@ -187,6 +191,10 @@ if (NOT MSVC)
   include(CheckCXXSourceCompiles)
   set(OLD_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
   set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS} -std=c++14)
+  ## Fix for mingw pthread mode
+  if (MINGW AND CMAKE_USE_PTHREADS_INIT)
+    set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_REQUIRED_LIBRARIES} -lpthread")
+  endif()
   check_cxx_source_compiles("
     #include <atomic>
     int main() {
