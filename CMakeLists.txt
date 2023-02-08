@@ -32,11 +32,18 @@ if(protobuf_DEPRECATED_CMAKE_SUBDIRECTORY_USAGE)
   get_filename_component(protobuf_SOURCE_DIR ${protobuf_SOURCE_DIR} DIRECTORY)
 endif()
 
+# Inherit c++ standard
+if (CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD_INIT ${CMAKE_CXX_STANDARD})
+else()
+  set(CMAKE_CXX_STANDARD_INIT 11)
+endif()
+
 # Add c++11 flags
 if (CYGWIN)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++${CMAKE_CXX_STANDARD_INIT}")
 else()
-  set(CMAKE_CXX_STANDARD 11)
+  set(CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD_INIT})
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
   set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
